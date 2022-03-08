@@ -52,6 +52,15 @@ var ListGithubRepositoriesUseCase = /** @class */ (function () {
         });
         return listRepoCSharp;
     };
+    ListGithubRepositoriesUseCase.prototype.buildObjReturn = function (listRepoCSharp) {
+        return {
+            0: listRepoCSharp[0],
+            1: listRepoCSharp[1],
+            2: listRepoCSharp[2],
+            3: listRepoCSharp[3],
+            4: listRepoCSharp[4],
+        };
+    };
     ListGithubRepositoriesUseCase.prototype.execute = function () {
         return __awaiter(this, void 0, void 0, function () {
             var githubRepositories, listRepoCSharp;
@@ -63,7 +72,7 @@ var ListGithubRepositoriesUseCase = /** @class */ (function () {
                         listRepoCSharp = this.filterCSharp(githubRepositories);
                         listRepoCSharp = this.sortData(listRepoCSharp);
                         listRepoCSharp = listRepoCSharp.slice(0, 5);
-                        return [2 /*return*/, listRepoCSharp];
+                        return [2 /*return*/, this.buildObjReturn(listRepoCSharp)];
                 }
             });
         });
