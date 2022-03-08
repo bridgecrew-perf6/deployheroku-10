@@ -25,13 +25,23 @@ class ListGithubRepositoriesUseCase {
     return listRepoCSharp;
   }
 
+  buildObjReturn(listRepoCSharp: Repo[]) {
+    return {
+      0: listRepoCSharp[0],
+      1: listRepoCSharp[1],
+      2: listRepoCSharp[2],
+      3: listRepoCSharp[3],
+      4: listRepoCSharp[4],
+    };
+  }
+
   async execute() {
     const githubRepositories = await this.githubRepository.list();
     let listRepoCSharp = this.filterCSharp(githubRepositories);
     listRepoCSharp = this.sortData(listRepoCSharp);
     listRepoCSharp = listRepoCSharp.slice(0, 5);
 
-    return listRepoCSharp;
+    return this.buildObjReturn(listRepoCSharp);
   }
 }
 
