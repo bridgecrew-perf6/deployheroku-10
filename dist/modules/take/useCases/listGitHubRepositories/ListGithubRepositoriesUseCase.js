@@ -36,15 +36,47 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = require("express");
-var listGitHubRepositories_1 = require("../modules/take/useCases/listGitHubRepositories");
-var gitRoutes = express_1.Router();
-exports.gitRoutes = gitRoutes;
-gitRoutes.get("/", function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, listGitHubRepositories_1.listGitHubController.handle(request, response)];
-            case 1: return [2 /*return*/, _a.sent()];
-        }
-    });
-}); });
+var ListGithubRepositoriesUseCase = /** @class */ (function () {
+    function ListGithubRepositoriesUseCase(githubRepository) {
+        this.githubRepository = githubRepository;
+    }
+    ListGithubRepositoriesUseCase.prototype.filterCSharp = function (githubRepositories) {
+        var listRepoCSharp = githubRepositories.filter(function (item) {
+            return item.language === "C#";
+        });
+        return listRepoCSharp;
+    };
+    ListGithubRepositoriesUseCase.prototype.sortData = function (listRepoCSharp) {
+        listRepoCSharp = listRepoCSharp.sort(function (a, b) {
+            return (new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+        });
+        return listRepoCSharp;
+    };
+    ListGithubRepositoriesUseCase.prototype.buildObjReturn = function (listRepoCSharp) {
+        return {
+            0: listRepoCSharp[0],
+            1: listRepoCSharp[1],
+            2: listRepoCSharp[2],
+            3: listRepoCSharp[3],
+            4: listRepoCSharp[4],
+        };
+    };
+    ListGithubRepositoriesUseCase.prototype.execute = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var githubRepositories, listRepoCSharp;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.githubRepository.list()];
+                    case 1:
+                        githubRepositories = _a.sent();
+                        listRepoCSharp = this.filterCSharp(githubRepositories);
+                        listRepoCSharp = this.sortData(listRepoCSharp);
+                        listRepoCSharp = listRepoCSharp.slice(0, 5);
+                        return [2 /*return*/, this.buildObjReturn(listRepoCSharp)];
+                }
+            });
+        });
+    };
+    return ListGithubRepositoriesUseCase;
+}());
+exports.ListGithubRepositoriesUseCase = ListGithubRepositoriesUseCase;

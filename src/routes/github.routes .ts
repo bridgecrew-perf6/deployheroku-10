@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { listGitHubController } from "../modules/letalk/useCases/listGitHubRepositories";
+import { listGitHubController } from "../modules/take/useCases/listGitHubRepositories";
 
 const gitRoutes = Router();
 

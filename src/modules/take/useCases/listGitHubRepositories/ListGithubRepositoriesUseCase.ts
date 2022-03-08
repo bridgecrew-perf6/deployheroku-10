@@ -1,5 +1,4 @@
 import { Repo } from "../../model/Repo";
-import { User } from "../../model/User";
 import { IGitHubRepository } from "../../repositories/IGitHubRepository";
 
 class ListGithubRepositoriesUseCase {

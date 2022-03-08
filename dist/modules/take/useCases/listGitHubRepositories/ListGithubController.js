@@ -36,15 +36,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = require("express");
-var listGitHubRepositories_1 = require("../modules/take/useCases/listGitHubRepositories");
-var gitRoutes = express_1.Router();
-exports.gitRoutes = gitRoutes;
-gitRoutes.get("/", function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, listGitHubRepositories_1.listGitHubController.handle(request, response)];
-            case 1: return [2 /*return*/, _a.sent()];
-        }
-    });
-}); });
+var ListGithubController = /** @class */ (function () {
+    function ListGithubController(listGitHubUseCase) {
+        this.listGitHubUseCase = listGitHubUseCase;
+    }
+    ListGithubController.prototype.handle = function (_, response) {
+        return __awaiter(this, void 0, void 0, function () {
+            var allRepositories;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.listGitHubUseCase.execute()];
+                    case 1:
+                        allRepositories = _a.sent();
+                        return [2 /*return*/, response.json(allRepositories)];
+                }
+            });
+        });
+    };
+    return ListGithubController;
+}());
+exports.ListGithubController = ListGithubController;

@@ -36,15 +36,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = require("express");
-var listGitHubRepositories_1 = require("../modules/take/useCases/listGitHubRepositories");
-var gitRoutes = express_1.Router();
-exports.gitRoutes = gitRoutes;
-gitRoutes.get("/", function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, listGitHubRepositories_1.listGitHubController.handle(request, response)];
-            case 1: return [2 /*return*/, _a.sent()];
+var shuffle = require("shuffle-array");
+var axios = require("axios");
+var GitHubRepository = /** @class */ (function () {
+    function GitHubRepository() {
+    }
+    GitHubRepository.getInstance = function () {
+        if (!GitHubRepository.INSTANCE) {
+            GitHubRepository.INSTANCE = new GitHubRepository();
         }
-    });
-}); });
+        return GitHubRepository.INSTANCE;
+    };
+    GitHubRepository.prototype.list = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var resp, listRepo;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, axios.get("https://api.github.com/orgs/takenet/repos")];
+                    case 1:
+                        resp = _a.sent();
+                        listRepo = resp.data;
+                        return [2 /*return*/, listRepo];
+                }
+            });
+        });
+    };
+    return GitHubRepository;
+}());
+exports.GitHubRepository = GitHubRepository;
